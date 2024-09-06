@@ -1,12 +1,8 @@
-
-
-
-
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('registrationForm');
     const userTable = document.getElementById('userTable').getElementsByTagName('tbody')[0];
 
-
+    
     const savedData = JSON.parse(localStorage.getItem('users') || '[]');
     savedData.forEach(user => addRowToTable(user));
 
@@ -19,19 +15,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const dob = document.getElementById('dob').value;
         const terms = document.getElementById('terms').checked;
         
+        
         if (!validateAge(dob)) {
             alert('You must be between 18 and 55 years old.');
             return;
         }
         
-        const user = { name, email, password, dob, terms };
-        
     
+        const user = { name, email, password, dob, terms };
+
+
         const users = JSON.parse(localStorage.getItem('users') || '[]');
         users.push(user);
         localStorage.setItem('users', JSON.stringify(users));
         
         addRowToTable(user);
+
+
         form.reset();
     });
 
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateAge(dateOfBirth) {
         const today = new Date();
         const dob = new Date(dateOfBirth);
-        const age = today.getFullYear() - dob.getFullYear();
+        let age = today.getFullYear() - dob.getFullYear();
         const m = today.getMonth() - dob.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
             age--;
